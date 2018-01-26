@@ -1,18 +1,52 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import NavBar from './NavBar';
+import SignUp from './SignUp';
+import SignIn from './SignIn';
 import './App.css';
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      showSignIn: false,
+      showSignUp: false,
+      signedIn: false,
+      user: {},
+    }
+    this.handleSave = this.handleSave.bind(this);
+  }
+
+  handleSave(user) {
+    console.log(user);
+    // let signedInUser = user;
+    this.setState({
+      user,
+      signedIn: true
+    });
+    console.log(this.state);
+  }
+
   render() {
+    const { showSignIn, showSignUp } = this.state;
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <NavBar signedIn={ this.state.signedIn }
+          clickSignIn={ () => this.signIn({
+            showSignIn: true,
+            showSignUp: false
+          }) }
+          clickSignUp={ () => this.signUp({
+            showSignUp: true,
+            showSignIn: false
+          }) }
+        />
+        <SignUp
+          onSave={ this.handleSave }
+          />
+        <SignIn
+          onSave={ this.handleSave }
+          />
+        <h1>Current User: { this.state.user.username }</h1>
       </div>
     );
   }
