@@ -50,7 +50,7 @@ class SignUp extends Component {
               throw err;
             })
           } else {
-            let err = { errorMessage: "Please Try Again Later, Server Is NOT Responding."}
+            let err = { errorMessage: "Please Try Again Later, Server Is NOT Responding." }
             throw err;
           }
         }

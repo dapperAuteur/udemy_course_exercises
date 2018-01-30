@@ -16,6 +16,10 @@ class App extends Component {
     this.handleSave = this.handleSave.bind(this);
   }
 
+  componentWillUpdate=() => {
+    console.log(this.state);
+  }
+
   handleSave(user) {
     console.log(user);
     // let signedInUser = user;
@@ -28,24 +32,30 @@ class App extends Component {
 
   render() {
     const { showSignIn, showSignUp } = this.state;
+    let signUp = null;
+    let signIn = null;
+    if (showSignUp) {
+      signUp = <SignUp
+        onSave={ this.handleSave }
+        />
+    }
+    if (showSignIn) {
+      signIn = <SignIn
+        onSave={ this.handleSave }
+        />
+    }
     return (
       <div className="App">
         <NavBar signedIn={ this.state.signedIn }
-          clickSignIn={ () => this.signIn({
-            showSignIn: true,
-            showSignUp: false
+          clickSignIn={ () => this.setState({
+            showSignIn: !showSignIn
           }) }
-          clickSignUp={ () => this.signUp({
-            showSignUp: true,
-            showSignIn: false
+          clickSignUp={ () => this.setState({
+            showSignUp: !showSignUp
           }) }
         />
-        <SignUp
-          onSave={ this.handleSave }
-          />
-        <SignIn
-          onSave={ this.handleSave }
-          />
+      { signUp }
+      { signIn }
         <h1>Current User: { this.state.user.username }</h1>
       </div>
     );
